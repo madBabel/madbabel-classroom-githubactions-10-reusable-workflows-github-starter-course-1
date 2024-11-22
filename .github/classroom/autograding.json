@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "Archivo 18-1-reusable-workflow.yaml existe",
+      "run": "test -f .github/workflows/18-1-reusable-workflow.yaml",
+      "points": 1
+    },
+    {
+      "name": "Archivo 18-2-reusable-workflow.yaml existe",
+      "run": "test -f .github/workflows/18-2-reusable-workflow.yaml",
+      "points": 1
+    },
+    {
+      "name": "Validación de la sintaxis YAML en 18-1",
+      "run": "yamllint .github/workflows/18-1-reusable-workflow.yaml",
+      "points": 2
+    },
+    {
+      "name": "Validación de la sintaxis YAML en 18-2",
+      "run": "yamllint .github/workflows/18-2-reusable-workflow.yaml",
+      "points": 2
+    },
+    {
+      "name": "Workflow 18-1 tiene los inputs y outputs correctos",
+      "run": "grep -q 'workflow_call:' .github/workflows/18-1-reusable-workflow.yaml && grep -q 'inputs:' .github/workflows/18-1-reusable-workflow.yaml && grep -q 'outputs:' .github/workflows/18-1-reusable-workflow.yaml",
+      "points": 2
+    },
+    {
+      "name": "Workflow 18-1 tiene el job deploy con los outputs",
+      "run": "grep -q 'outputs:' .github/workflows/18-1-reusable-workflow.yaml && grep -q 'steps:' .github/workflows/18-1-reusable-workflow.yaml",
+      "points": 2
+    },
+    {
+      "name": "Workflow 18-2 usa el flujo reutilizable",
+      "run": "grep -q 'uses:' .github/workflows/18-2-reusable-workflow.yaml",
+      "points": 2
+    },
+    {
+      "name": "Workflow 18-2 imprime los outputs correctamente",
+      "run": "grep -q 'needs.deploy.outputs.build-status' .github/workflows/18-2-reusable-workflow.yaml && grep -q 'needs.deploy.outputs.url' .github/workflows/18-2-reusable-workflow.yaml",
+      "points": 3
+    }
+  ]
+}
